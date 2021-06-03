@@ -1,58 +1,58 @@
 CREATE TABLE users (
-  id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  email varchar(13) NOT NULL,
-  password varchar(100) NOT NULL,
-  display_name varchar(100) NOT NULL,
-  self_introduce varchar(100),
+  id int(11) unsigned not null primary key auto_increment,
+  email varchar(13) not null,
+  password varchar(100) not null,
+  display_name varchar(100) not null,
+  self_introduce text(1000),
   work_phone_number char(13),
   mobile_phone_number char(13),
-  is_deleted tinyint(1) NOT NULL DEFAULT 0,
-  created_at date NOT NULL,
-  updated_at date NOT NULL,
-)
-
-CREATE TABLE chat_contents (
-  id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  post_user_id int(11) REFERENCES users(id) NOT NULL PRIMARY KEY,
-  updated_user_id int(11) REFERENCES user(id) NOT NULL,
-  chatroom_id int(11) REFERENCES chatrooms(id) NOT NULL,
-  post_content varchar(1000) NOT NULL,
-  attchment_file_name varchar(1000) NOT NULL,
-  is_deleted tinyint(1) NOT NULL DEFAULT 0,
-  created_at date NOT NULL,
-  updated_at date NOT NULL,
+  is_deleted tinyint(1) not null default 0,
+  created_at datetime not null default current_timestamp,
+  updated_at datetime not null default current_timestamp,
 )
 
 CREATE TABLE chatrooms (
-  id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  created_user_id int(11) REFERENCES users(id) NOT NULL,
-  updated_user_id int(11) REFERENCES users(id) NOT NULL,
-  chat_name varchar(100) NOT NULL,
-  chat_overview varchar(100) NOT NULL,
-  is_attchment_file tinyint(1) DEFAULT 0 NOT NULL,
-  is_direct_chat tinyint(1) DEFAULT 0 NOT NULL,
-  is_deleted tinyint(1) DEFAULT 0 NOT NULL,
-  created_at date NOT NULL,
-  updated_at date NOT NULL,
+  id int(11) unsigned not null primary key auto_increment,
+  post_user_id int(11) unsigned references users(id) not null,
+  update_user_id int(11) unsigned references users(id) not null,
+  chat_name varchar(100) not null,
+  chat_overview text(1000),
+  can_send_file tinyint(1) default 0 not null,
+  is_direct_chat tinyint(1) default 0 not null,
+  is_deleted tinyint(1) default 0 not null,
+  created_at datetime not null default current_timestamp,
+  updated_at datetime not null default current_timestamp,
+)
+
+CREATE TABLE chat_contents (
+  id int(11) unsigned not null primary key auto_increment,
+  post_user_id int(11) unsigned references users(id) not null primary key,
+  update_user_id int(11) unsigned references user(id) not null,
+  chatroom_id int(11) unsigned references chatrooms(id) not null,
+  post_content text(1000) not null,
+  attchment_file_name varchar(100),
+  is_deleted tinyint(1) not null default 0,
+  created_at datetime not null default current_timestamp,
+  updated_at datetime not null default current_timestamp,
 )
 
 CREATE TABLE tasks (
-  id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  task_user_id int(11) NOT NULL REFERENCES users(id),
-  created_user_id int(11) NOT NULL REFERENCES users(id),
-  updated_user_id int(11) NOT NULL REFERENCES users(id),
-  chatrooms_id int(11) NOT NULL REFERENCES users(id),
-  task_content varchar(1000) NOT NULL,
-  deadline date NOT NULL,
-  finish_date NOT NULL,
-  is_deleted tinyint(1) DEFAULT 0 NOT NULL,
-  created_at date NOT NULL,
-  updated_at date NOT NULL
+  id int(11) unsigned not null primary key auto_increment,
+  task_user_id int(11) unsigned not null references users(id),
+  created_user_id int(11) unsigned not null references users(id),
+  updated_user_id int(11) unsigned not null references users(id),
+  chatrooms_id int(11) unsigned not null references users(id),
+  task_content varchar(1000) not null,
+  deadline datetime,
+  finish_date datetime not null,
+  is_deleted tinyint(1) default 0 not null,
+  created_at datetime not null default current_timestamp,
+  updated_at datetime NOT NULLdefault current_timestamp
 )
 
 CREATE TABLE chatroom_join_users (
-  id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  user_id int(11) NOT NULL REFERENCES users(id),
-  chatroom_id int(11) NOT NULL REFERENCES chatrooms(id),
-  created_at date NOT NULL
+  id int(11) unsigned not null primary key auto_increment,
+  user_id int(11) unsigned not null references users(id),
+  chatroom_id int(11) unsigned not null references chatrooms(id),
+  created_at datetime not null default current_timestamp
 )
