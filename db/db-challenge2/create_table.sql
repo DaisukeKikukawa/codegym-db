@@ -1,6 +1,6 @@
 CREATE TABLE users (
   id int(11) unsigned not null primary key auto_increment,
-  email varchar(13) not null,
+  email varchar(20) not null,
   password varchar(100) not null,
   display_name varchar(100) not null,
   self_introduce text(1000),
