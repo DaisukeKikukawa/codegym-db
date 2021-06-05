@@ -44,7 +44,7 @@ CREATE TABLE tasks (
   chatroom_id int(11) unsigned not null references users(id),
   task_content text(1000) not null,
   deadline datetime,
-  finished_date datetime not null,
+  is_finised tinyint(1)  not null default 0,
   is_deleted tinyint(1) default 0 not null,
   created_at datetime not null default current_timestamp,
   updated_at datetime not null default current_timestamp
