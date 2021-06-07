@@ -1,5 +1,5 @@
 BEGIN;
-DELETE 
+DELETE
       chatroom_join_users
 FROM
       chatroom_join_users
